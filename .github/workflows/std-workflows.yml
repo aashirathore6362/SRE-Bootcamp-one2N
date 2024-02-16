@@ -1,0 +1,11 @@
+name: GitHub Actions CI/CD
+run-name: github is Deploying Local CI and Local CD. 🚀
+on:
+  push:
+    branches:
+      - exercise-04
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job was automatically triggered by a Push event."
