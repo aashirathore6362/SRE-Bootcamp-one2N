@@ -9,3 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "The job was automatically triggered by a Push event."
+      - name: Build application.
+        run: |
+          make run
