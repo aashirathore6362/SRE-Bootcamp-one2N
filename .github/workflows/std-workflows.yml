@@ -1,5 +1,5 @@
 name: GitHub Actions CI/CD
-run-name: github is Deploying Local CI and Local CD. 🚀
+run-name: github is Deploying Local CI and Local CD.
 on:
   push:
     branches:
