@@ -16,3 +16,6 @@ jobs:
       - name: Run flask application.
         run: |
           make flaskapp_build
+      - name: Run flask application.
+        run: |
+          docker_build

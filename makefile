@@ -7,4 +7,9 @@ run-app:run
 #build application docker container.
 flaskapp_build:
 			docker build -t studentapi/flask:1.0.0 .
-			
+
+#Build and run the application using docker compose.
+docker_build:
+	docker compose up -d flask_db
+	docker compose build
+	docker compose up flask_app
