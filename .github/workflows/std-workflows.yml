@@ -15,4 +15,4 @@ jobs:
 
       - name: Run flask application.
         run: |
-          make run
+          make flaskapp_build
