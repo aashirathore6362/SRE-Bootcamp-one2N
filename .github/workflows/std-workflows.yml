@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "The job was automatically triggered by a Push event."
-      - name: Build application.
+     
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run flask application.
         run: |
           make run
