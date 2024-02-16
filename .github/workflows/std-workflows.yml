@@ -1,5 +1,5 @@
 name: GitHub Actions CI/CD
-run-name: github is Deploying Local CI and Local CD.
+run-name: Deploying Local CI and Local CD.
 on:
   push:
     branches:
@@ -16,6 +16,6 @@ jobs:
       - name: Run flask application.
         run: |
           make flaskapp_build
-      - name: Run flask application.
+      - name: Run docker compose
         run: |
-          docker_build
+          make docker_build
