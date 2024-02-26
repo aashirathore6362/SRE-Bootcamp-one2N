@@ -19,6 +19,3 @@ jobs:
       - name: Run docker compose
         run: |
           make docker_build
-      - name: stop application.
-        run: |
-          make app_down_docker
