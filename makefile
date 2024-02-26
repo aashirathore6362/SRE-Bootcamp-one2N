@@ -15,4 +15,4 @@ docker_build:
 
 #Push the docker image
 docker_push:
-	docker push studentapi/flask:1.0.0
+	docker push flaskapp:studentapi/flask:1.0.0
