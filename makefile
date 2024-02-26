@@ -12,10 +12,8 @@ flaskapp_build:
 docker_build:
 	docker compose up -d flask_db
 	docker compose build
-	docker compose up flask_app
 
 #Push the docker image
 docker_push:
-	docker tag studentapi:1.0.0 $DOCKER_USERNAME/studentapi:1.0.0
-	docker images
-	docker push $DOCKER_USERNAME/studentapi:1.0.0
+	docker tag studentapi:1.0.0 $DOCKER_REGISTRY/studentapi:1.0.0
+	docker push $DOCKER_REGISTRY/studentapi:1.0.0
