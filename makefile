@@ -15,5 +15,5 @@ docker_build:
 
 #Push the docker image
 docker_push:
-	docker tag studentapi:1.0.0 ${DOCKER_USERNAME}/studentapi:1.0.0
-	docker push ${DOCKER_USERNAME}/studentapi:1.0.0
+	docker tag studentapi:1.0.0 ${REPO_NAME}/studentapi:1.0.0
+	docker push ${REPO_NAME}/studentapi:1.0.0
