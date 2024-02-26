@@ -1,5 +1,5 @@
 name: GitHub Actions CI/CD
-run-name: Deploying Local CI and Local CD.
+run-name: Deploying Local CI.
 on:
   push:
     branches:
@@ -19,13 +19,15 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-      - name: Run flask application.
+      - name: Building flask application.
         run: |
           make flaskapp_build
+
       - name: Run docker compose.
         run: |
           make docker_build
-      - name: Push the Image in dockerHub.
+
+      - name: Push the Image into dockerHub.
         run: |
           make docker_push
         env:
