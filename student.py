@@ -9,7 +9,7 @@ app = Flask(__name__)
 class Base(DeclarativeBase):
   pass
 
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/postgres'
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 migrate = Migrate(app, db, render_as_batch=False)
@@ -30,16 +30,22 @@ with app.app_context():
 #GET student
 @app.route('/api/v1/student', methods=['GET'])
 def get_tasks():
-    allstudent = User.query.all()
-    return make_response(jsonify([std.json() for std in allstudent]), 200)
-
+    try:
+        allstudent = User.query.all()
+        return make_response(jsonify([std.json() for std in allstudent]), 200)
+    except:
+        return make_response(jsonify({'message': 'error getting students'}), 500)
 @app.route('/api/v1/student', methods=['POST'])
 def create_student():
-    data = request.get_json()
-    new_std = User(stdname=data['stdname'], title=data['title'])
-    db.session.add(new_std)
-    db.session.commit()
-    return make_response(jsonify({'message': 'student created'}), 201)
+    try:
+        data = request.get_json()
+        new_std = User(stdname=data['stdname'], title=data['title'])
+        db.session.add(new_std)
+        db.session.commit()
+        return make_response(jsonify({'message': 'student created'}), 201)
+    except:
+        return make_response(jsonify({'message': 'error creating student'}), 500)
+
 
 @app.route('/api/v1/student/<int:id>', methods=['GET'])
 def get_std(id):
@@ -51,21 +57,27 @@ def get_std(id):
 # Update student
 @app.route('/api/v1/student/<int:id>', methods=['PUT'])
 def update_std(id):
-    updatestd = User.query.filter_by(id=id).first()
-    if updatestd:
-      data = request.get_json()
-      updatestd.stdname = data['stdname']
-      updatestd.title = data['title']
-      db.session.commit()
-      return make_response(jsonify({'message': 'student updated'}), 200)
-    return make_response(jsonify({'message': 'student not found'}), 404)
- 
+    try:
+        updatestd = User.query.filter_by(id=id).first()
+        if updatestd:
+            data = request.get_json()
+            updatestd.stdname = data['stdname']
+            updatestd.title = data['title']
+            db.session.commit()
+            return make_response(jsonify({'message': 'student updated'}), 200)
+        return make_response(jsonify({'message': 'student not found'}), 404)
+    except:
+        return make_response(jsonify({'message': 'error updating students'}), 500)
+    
 # delete a student
 @app.route('/api/v1/student/<int:id>', methods=['DELETE'])
 def delete_std(id):
-    delete_std = User.query.filter_by(id=id).first()
-    if delete_std:
-      db.session.delete(delete_std)
-      db.session.commit()
-      return make_response(jsonify({'message': 'student deleted'}), 200)
-    return make_response(jsonify({'message': 'student not found'}), 404)
+    try:
+        delete_std = User.query.filter_by(id=id).first()
+        if delete_std:
+            db.session.delete(delete_std)
+            db.session.commit()
+            return make_response(jsonify({'message': 'student deleted'}), 200)
+        return make_response(jsonify({'message': 'student not found'}), 404)
+    except:
+        return make_response(jsonify({'message': 'error deleting students'}), 500)
