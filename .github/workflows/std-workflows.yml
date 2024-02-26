@@ -25,3 +25,6 @@ jobs:
       - name: Run docker compose.
         run: |
           make docker_build
+      - name: Push the Image in dockerHub.
+        run: |
+          make docker_push

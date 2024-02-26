@@ -7,7 +7,6 @@ run-app:run
 #build application docker container.
 flaskapp_build:
 			docker build -t studentapi:1.0.0 .
-			docker push studentapi:1.0.0
 
 #Build and run the application using docker compose.
 docker_build:
@@ -17,4 +16,4 @@ docker_build:
 #Push the docker image
 docker_push:
 	docker tag studentapi:1.0.0 studentapi:1.0.0
-	docker push studentapi:1.0.0
+	docker push studentapi/studentapi:1.0.0
