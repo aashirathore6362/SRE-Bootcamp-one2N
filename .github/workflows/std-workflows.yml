@@ -27,7 +27,6 @@ jobs:
           make docker_build
       - name: Push the Image in dockerHub.
         run: |
-          make docker_push "$REPO_NAME"
-          echo "$REPO_NAME"
+          make docker_push
         env:
           REPO_NAME: aashirathore111
