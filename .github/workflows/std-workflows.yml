@@ -27,4 +27,4 @@ jobs:
           make docker_build
       - name: Push the Image in dockerHub.
         run: |
-          ${{ secrets.DOCKER_REGISTRY }} make docker_push
+          ${{ secrets.DOCKER_USERNAME }} make docker_push
