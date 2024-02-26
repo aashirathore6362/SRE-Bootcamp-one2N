@@ -12,7 +12,3 @@ flaskapp_build:
 docker_build:
 	docker compose up -d flask_db
 	docker compose build
-	docker compose up flask_app
-
-app_down_docker:
-	docker-compose down
