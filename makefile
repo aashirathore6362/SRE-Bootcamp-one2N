@@ -16,4 +16,5 @@ docker_build:
 #Push the docker image
 docker_push:
 	docker tag studentapi:1.0.0 studentapi:1.0.0
-	docker push aashirathore111/studentapi:1.0.0
+	docker images
+	docker push studentapi:1.0.0
