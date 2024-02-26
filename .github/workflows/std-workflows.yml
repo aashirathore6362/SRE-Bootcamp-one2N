@@ -27,6 +27,6 @@ jobs:
           make docker_build
       - name: Push the Image in dockerHub.
         run: |
-          ${{REPO_NAME}} make docker_push
+          make docker_push "$REPO_NAME"
         env:
           REPO_NAME: aashirathore111
