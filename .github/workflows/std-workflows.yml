@@ -9,4 +9,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - run: echo "The job was automatically triggered by a Push event."
-     
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "This job's status is ${{ job.status }}."
