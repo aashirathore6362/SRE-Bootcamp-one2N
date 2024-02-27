@@ -23,5 +23,4 @@ jobs:
           echo "$VAGRANT_SSH_KEY" | tr -d '\r' > id_rsa
           chmod 0400 id_rsa
           ssh-add id_rsa
-          ssh -i id_rsa -p 2222 vagrant@127.0.0.1
           scp -i id_rsa -P 2222 docker-compose.yml vagrant@127.0.0.1:/home/vagrant
