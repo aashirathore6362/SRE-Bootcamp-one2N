@@ -9,7 +9,7 @@ app = Flask(__name__)
 class Base(DeclarativeBase):
   pass
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get("DB_URL")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 migrate = Migrate(app, db, render_as_batch=False)
