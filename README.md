@@ -15,12 +15,9 @@ Create the virtualenv.
 $ python3 -m venv namevenv
 ```
 
-
 **Dependencies**
 
 Flask: Base Web Framework.
-
-
 
 **Basic Folder Structure**
 
@@ -30,19 +27,15 @@ makefile: Build and run the REST API locally.
 
 requirements.txt: Installing the dependency.
 
- 
-
 **API Endpoint**
 
-GET http://localhost:5000/student/api/v1/
+GET http://localhost:5000/api/v1/student
 
-POST http://localhost:5000/student/api/v1/
+POST http://localhost:5000/api/v1/student
 
-PUT http://localhost:5000/student/api/v1/{id}
+PUT http://localhost:5000//api/v1/student/{id}
 
-DELETE http://localhost:5000/student/api/v1/{id}
-
-
+DELETE http://localhost:5000/api/v1/student{id}
 
 **Run the project**
 ```
