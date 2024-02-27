@@ -5,7 +5,7 @@ on:
     branches:
       - exercise-05
 jobs:
-  CI:
+  CD:
     runs-on: self-hosted
     steps:
       - run: echo "The job was automatically triggered by a Push event."
@@ -15,4 +15,9 @@ jobs:
       - run: echo "This job's status is ${{ job.status }}."
 
       - name: Checkout code
-        uses: actions/checkout@v3      
+        uses: actions/checkout@v3
+      - name: Set up SSH key and Trigger deployment
+        env:
+          VAGRANT_SSH_KEY: ${{ secrets.VAGRANT_SSH_KEY }}
+        run: |
+          echo "$VAGRANT_SSH_KEY" | tr -d '\r' > id_rsa
