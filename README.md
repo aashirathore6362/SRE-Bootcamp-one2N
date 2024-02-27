@@ -1,2 +1,7 @@
-# SRE-Bootcamp-one2N
-This repository is dedicated to solution of SRE training, Bootcamp created by One2N. 
+Containerizing The App
+
+Containerization allows you to package your application and its dependencies into a single container.
+
+Dependencies
+
+Docker install.
