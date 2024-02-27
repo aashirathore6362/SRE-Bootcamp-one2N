@@ -85,6 +85,5 @@ Vagrant.configure("2") do |config|
 
      #Docker login
      docker login -u "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD"
-     docker pull aashirathore111/studentapi:1.0.0
   SHELL
 end
