@@ -4,3 +4,4 @@ install-dep:
 	pip install -r requirements.txt
 run:install-dep
 	flask run --host=$(HOST) --port=$(APP_PORT)
+
