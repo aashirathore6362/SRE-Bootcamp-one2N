@@ -1,4 +1,4 @@
 install-dep:
 	pip install -r requirements.txt
 run:install-dep
-	flask run
+	flask -A student.py run
