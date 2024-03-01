@@ -39,8 +39,10 @@ DELETE http://localhost:5000/api/v1/student{id}
 
 **Build REST API docker image using:**
 ```
-IMAGE_TAG make build
+IMAGE_TAG=1.0.0 make build
 
 ```
 **Run REST API docker container:**
-IMAGE_TAG HOST PORT make docker-run
+```
+IMAGE_TAG=1.0.0 HOST=0.0.0.0 PORT=4000 make docker-run
+```
