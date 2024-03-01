@@ -1,6 +1,6 @@
 FROM python:alpine
-WORKDIR /rest-api
-COPY requirements.txt makefile student.py /rest-api/ 
+WORKDIR /app
+COPY requirements.txt makefile student.py /app/ 
 RUN apk update && apk add make
 EXPOSE 4000
 ENV FLASK_APP=student.py
