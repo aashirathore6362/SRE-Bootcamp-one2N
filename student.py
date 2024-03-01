@@ -6,26 +6,26 @@ from sqlalchemy.orm import DeclarativeBase
 
 app = Flask(__name__)
 
-# class Base(DeclarativeBase):
-#   pass
+class Base(DeclarativeBase):
+  pass
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = environ.get("DB_URL")
-# db = SQLAlchemy(model_class=Base)
-# db.init_app(app)
-# migrate = Migrate(app, db, render_as_batch=False)
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get("DB_URL")
+db = SQLAlchemy(model_class=Base)
+db.init_app(app)
+migrate = Migrate(app, db, render_as_batch=False)
 
-# class User(db.Model):
-#     __tablename__ = 'student'
+class User(db.Model):
+    __tablename__ = 'student'
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     stdname = db.Column(db.String(80), unique=True, nullable=False)
-#     title = db.Column(db.String(80), unique=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    stdname = db.Column(db.String(80), unique=True, nullable=False)
+    title = db.Column(db.String(80), unique=True, nullable=False)
 
-#     def json(self):
-#         return {'id': self.id, 'stdname': self.stdname,'title': self.title}
+    def json(self):
+        return {'id': self.id, 'stdname': self.stdname,'title': self.title}
 
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
 
 #GET student
 @app.route('/api/v1/student', methods=['GET'])

@@ -1,7 +1,15 @@
-FROM python:alpine
+#Build the base image ->Stage 1
+FROM python:alpine as baseimage
+RUN mkdir /app
+COPY requirements.txt /app/
 WORKDIR /app
-COPY requirements.txt makefile appdb.py /app/ 
-RUN apk update && apk add make
-EXPOSE 4000
+RUN pip install --user -r requirements.txt
+
+#App run ->Stage2
+FROM python:alpine
+COPY --from=baseimage /root/.local /root/.local
+COPY student.py /app/
+WORKDIR /app
 ENV FLASK_APP=student.py
-CMD make migrate
+ENV PATH=/root/.local/bin:$PATH
+CMD flask run
