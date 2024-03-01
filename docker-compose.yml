@@ -3,11 +3,14 @@ version: "3.9"
 services:
   flask_app:
     container_name: flask_app
-    image: studentapi:1.0.0
+    #image: studentapi:1.0.0
     build: .
     ports:
       - "4000:4000"
+    volumes:
+      - ./:/rest-api
     environment:
+      - FLASK_DEBUG=1
       - DB_URL=postgresql://postgres:postgres@flask_db:5432/postgres
     depends_on:
       - flask_db
