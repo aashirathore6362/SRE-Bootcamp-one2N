@@ -12,7 +12,7 @@ class Base(DeclarativeBase):
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get("DB_URL")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
-migrate = Migrate(app, db, render_as_batch=False)
+migrate = Migrate(app, db)
 
 class User(db.Model):
     __tablename__ = 'student'
