@@ -1,5 +1,5 @@
 *.log
-.vagrant
+.vagrant/
 .idea/
 .vscode/
 __pycache__/
