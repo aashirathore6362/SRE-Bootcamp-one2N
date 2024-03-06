@@ -37,7 +37,12 @@ PUT http://localhost:5000//api/v1/student/{id}
 
 DELETE http://localhost:5000/api/v1/student{id}
 
-**Run the project**
+**Build REST API docker image using:**
 ```
-Make run
+IMAGE_TAG=1.0.0 make build
+
+```
+**Run REST API docker container:**
+```
+IMAGE_TAG=1.0.0 HOST=0.0.0.0 PORT=4000 make docker-run
 ```
