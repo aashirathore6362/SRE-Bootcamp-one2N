@@ -12,7 +12,7 @@ flaskapp_build:
 
 #Push the docker image
 docker_push:
-	docker tag studentapi:1.0.0 ${USERNAME}/studentapi:1.0.0
+	docker tag studentapi:$(IMAGE_TAG) ${USERNAME}/studentapi:1.0.0
 	docker push ${USERNAME}/studentapi:1.0.0
 
 docker-build:
