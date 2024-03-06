@@ -23,7 +23,7 @@ jobs:
         run: |
           make flaskapp_build
 
-      - name: Run docker compose.
+      - name: Run docker build.
         run: |
           make start-db
 
