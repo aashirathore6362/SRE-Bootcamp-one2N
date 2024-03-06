@@ -7,9 +7,10 @@ RUN pip install --user -r requirements.txt
 
 #App run ->Stage2
 FROM python:alpine
-COPY --from=baseimage /root/.local /root/.local
-COPY student.py /app/
 WORKDIR /app
+COPY --from=baseimage /root/.local /root/.local
+COPY student.py runapp.sh migrations /app/ 
+RUN chmod +x runapp.sh
 ENV FLASK_APP=student.py
 ENV PATH=/root/.local/bin:$PATH
-CMD flask run
+CMD ./runapp.sh
