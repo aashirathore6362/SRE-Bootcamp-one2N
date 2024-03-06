@@ -7,8 +7,8 @@ run:install-dep
 run-app:run
 
 #build application docker container.
-flaskapp_build:
-			docker build -t studentapi:1.0.0 .
+# flaskapp_build:
+# 			docker build -t studentapi:1.0.0 .
 
 #Push the docker image
 docker_push:

@@ -23,7 +23,7 @@ jobs:
         run: |
           make docker-build
         env:
-          IMAGE_TAG: ${{env.IMAGE_TAG}}
+          IMAGE_TAG: ${{secrets.IMAGE_TAG}}
 
       - name: Run docker build.
         run: |
