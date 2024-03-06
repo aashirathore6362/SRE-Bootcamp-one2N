@@ -34,3 +34,4 @@ jobs:
           make docker_push
         env:
           USERNAME: ${{secrets.DOCKER_USERNAME}}
+          IMAGE_TAG: ${{secrets.IMAGE_TAG}}

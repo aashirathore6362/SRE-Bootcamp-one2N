@@ -2,13 +2,9 @@ install-dep:
 	pip install -r requirements.txt
 
 run:install-dep
-
 	flask -A student.py run --host=${HOSTPORT} --port=${APP_PORT}
-run-app:run
 
-#build application docker container.
-# flaskapp_build:
-# 			docker build -t studentapi:1.0.0 .
+run-app:run
 
 #Push the docker image
 docker_push:
