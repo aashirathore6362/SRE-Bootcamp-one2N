@@ -13,4 +13,3 @@ WORKDIR /app
 ENV FLASK_APP=student.py
 ENV PATH=/root/.local/bin:$PATH
 CMD flask run
->>>>>>> 0552dc1fe5a8d880cdf84fbae58b60e776944b11
