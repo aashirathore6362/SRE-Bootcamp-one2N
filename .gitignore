@@ -1,5 +1,3 @@
-*.log
-.vagrant/
 .idea/
 .vscode/
 __pycache__/
@@ -10,3 +8,4 @@ htmlcov/
 docs/_build/
 dist/
 venv/
+.vagrant/
