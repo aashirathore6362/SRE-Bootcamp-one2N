@@ -11,17 +11,14 @@ flaskapp_build:
 			docker build -t studentapi:1.0.0 .
 
 #Build and run the application using docker compose.
-docker_build:
-	docker compose up -d flask_db
-	docker compose build
+# docker_build:
+# 	docker compose build
 
 #Push the docker image
 docker_push:
 	docker tag studentapi:1.0.0 ${REPO_NAME}/studentapi:1.0.0
 	docker push ${REPO_NAME}/studentapi:1.0.0
 
-app-run:install-dep
-	flask run
 docker-build:
 	docker build -t studentapi:$(IMAGE_TAG) .
 docker-run: 
