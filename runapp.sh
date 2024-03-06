@@ -1,4 +1,10 @@
 #!/bin/sh
-flask db migrate -m "Initial migration."
-flask db upgrade
-flask run
+
+if [ "$MIGRATION" = "TRUE" ];
+then
+    flask db migrate
+    flask db upgrade
+else
+    echo "Migrations not running.";
+    flask run
+fi;

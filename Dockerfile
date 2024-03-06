@@ -13,5 +13,6 @@ COPY student.py runapp.sh /app/
 COPY migrations /app/migrations/
 RUN chmod +x runapp.sh
 ENV FLASK_APP=student.py
+# ENV MIGRATION=True
 ENV PATH=/root/.local/bin:$PATH
 CMD ./runapp.sh

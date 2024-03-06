@@ -9,8 +9,7 @@ docker-run:
 
 start-db:
 	docker compose up -d flask_db
-migrate:
-	docker exec -it $(CONTAINER_NAME) /bin/sh flask db init
-compose-flask_db:
+db-migrate:
+	docker compose up db_migrate
+compose-flask-app:
 	docker compose up flask_app
-	

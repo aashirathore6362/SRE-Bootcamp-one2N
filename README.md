@@ -27,6 +27,10 @@ makefile: Build and run the REST API locally.
 
 requirements.txt: Installing the dependency.
 
+runapp.sh: Running a DB migration.
+
+docker-compose.yml: Three service are there flask_db, flask_app and db_migrate.
+
 **API Endpoint**
 
 GET http://localhost:5000/api/v1/student
@@ -37,12 +41,29 @@ PUT http://localhost:5000//api/v1/student/{id}
 
 DELETE http://localhost:5000/api/v1/student{id}
 
-**Build REST API docker image using:**
+**Run APP locally using make:**
 ```
-IMAGE_TAG=1.0.0 make build
+make app-run
 
 ```
 **Run REST API docker container:**
 ```
 IMAGE_TAG=1.0.0 HOST=0.0.0.0 PORT=4000 make docker-run
+
+```
+**To run using docker compose:**
+```
+make start-db
+
+```
+
+```
+make compose-flask-app
+
+```
+
+**To run DB Migrations:**
+```
+make db-migrate
+
 ```
