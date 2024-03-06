@@ -12,14 +12,15 @@ class Base(DeclarativeBase):
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get("DB_URL")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
-migrate = Migrate(app, db, render_as_batch=False)
+migrate = Migrate(app, db)
 
 class User(db.Model):
     __tablename__ = 'student'
 
     id = db.Column(db.Integer, primary_key=True)
-    stdname = db.Column(db.String(80), unique=True, nullable=False)
+    stdname = db.Column(db.String(80), unique=False, nullable=False)
     title = db.Column(db.String(80), unique=True, nullable=False)
+    rollno = db.Column(db.Integer, unique=True)
 
     def json(self):
         return {'id': self.id, 'stdname': self.stdname,'title': self.title}
@@ -81,3 +82,4 @@ def delete_std(id):
         return make_response(jsonify({'message': 'student not found'}), 404)
     except:
         return make_response(jsonify({'message': 'error deleting students'}), 500)
+

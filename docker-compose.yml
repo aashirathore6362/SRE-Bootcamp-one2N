@@ -1,13 +1,23 @@
 version: "3.9"
 
 services:
+  db_migrate:
+    container_name: db_migration
+    image: studentapi:1.0.0
+    environment:
+      - MIGRATION=TRUE
+      - DB_URL=postgresql://postgres:postgres@flask_db:5432/postgres
+    depends_on:
+      - flask_db
   flask_app:
     container_name: flask_app
     image: studentapi:1.0.0
-    build: .
     ports:
       - "4000:4000"
+    volumes:
+      - ./:/rest-api
     environment:
+      - FLASK_DEBUG=1
       - DB_URL=postgresql://postgres:postgres@flask_db:5432/postgres
     depends_on:
       - flask_db
@@ -15,7 +25,7 @@ services:
     container_name: flask_db
     image: postgres:12
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
