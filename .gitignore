@@ -8,5 +8,5 @@ htmlcov/
 docs/_build/
 dist/
 venv/
-.vagrant/
+.vagrant
 *.log
