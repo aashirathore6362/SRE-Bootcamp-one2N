@@ -10,4 +10,4 @@ dist/
 venv/
 *.log
 .vagrant
-.github
+.github/
