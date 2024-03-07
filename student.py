@@ -82,3 +82,4 @@ def delete_std(id):
         return make_response(jsonify({'message': 'student not found'}), 404)
     except:
         return make_response(jsonify({'message': 'error deleting students'}), 500)
+

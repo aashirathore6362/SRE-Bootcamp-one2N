@@ -1,0 +1,37 @@
+name: GitHub Actions CI/CD
+run-name: Deploy Local CI.
+on:
+  push:
+    branches:
+      - exercise-04
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job was automatically triggered by a Push event."
+     
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
+      - name: Building flask application.
+        run: |
+          make docker-build
+        env:
+          IMAGE_TAG: ${{secrets.IMAGE_TAG}}
+
+      - name: Run docker build.
+        run: |
+          make start-db
+
+      - name: Push the Image into dockerHub.
+        run: |
+          make docker_push
+        env:
+          USERNAME: ${{secrets.DOCKER_USERNAME}}
+          IMAGE_TAG: ${{secrets.IMAGE_TAG}}
