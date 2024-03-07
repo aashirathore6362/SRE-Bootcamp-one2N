@@ -9,4 +9,5 @@ docs/_build/
 dist/
 venv/
 *.log
-.vagrant/
+.vagrant
+.github/

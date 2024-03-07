@@ -3,7 +3,7 @@ run-name: Deploy Local CI.
 on:
   push:
     branches:
-      - exercise-04
+     
 jobs:
   CI:
     runs-on: ubuntu-latest
