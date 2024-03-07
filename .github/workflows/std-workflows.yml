@@ -3,10 +3,10 @@ run-name: Deploy Local CI.
 on:
   push:
     branches:
-     
+     - exercise-05
 jobs:
-  CI:
-    runs-on: ubuntu-latest
+  CD:
+    runs-on: self-hosted
     steps:
       - run: echo "The job was automatically triggered by a Push event."
      
