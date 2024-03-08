@@ -39,10 +39,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Get short SHA
-        run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
-
-      - name: Print short SHA
-        run: echo "Short SHA is ${{ env.SHORT_SHA }}"
+        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")"
 
       - name: Set up SSH key and Trigger deployment.
         env:
