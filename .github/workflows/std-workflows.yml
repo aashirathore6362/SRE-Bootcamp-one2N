@@ -47,5 +47,5 @@ jobs:
           chmod 0400 id_rsa
           ssh-add id_rsa
           scp -i id_rsa -P 2222 docker-compose-prod.yml vagrant@127.0.0.1:/home/vagrant
-          ssh -i id_rsa -p 2222 vagrant@127.0.0.1 "export IMAGE_TAG=$IMAGE_TAG"
+          # ssh -i id_rsa -p 2222 vagrant@127.0.0.1 "export IMAGE_TAG=$IMAGE_TAG"
           ssh -i id_rsa -p 2222 vagrant@127.0.0.1 "envsubst <docker-compose-prod.yml | docker compose -f docker-compose-prod.yml up -d"
