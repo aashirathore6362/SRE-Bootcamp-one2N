@@ -46,7 +46,4 @@ jobs:
           echo "$VAGRANT_SSH_KEY" | tr -d '\r' > id_rsa
           chmod 0400 id_rsa
           ssh-add id_rsa
-          scp -i id_rsa -P 2222 docker-compose-prod.yml vagrant@127.0.0.1:/home/vagrant
-          echo "scp run completed."
-          ssh -i id_rsa -p 2222 vagrant@127.0.0.1 "envsubst <docker-compose-prod.yml | docker compose -f docker-compose-prod.yml up -d"
-          echo "Docker compose done"
+          ssh -i id_rsa -p 2222 vagrant@127.0.0.1
