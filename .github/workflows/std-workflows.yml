@@ -43,6 +43,7 @@ jobs:
           VAGRANT_SSH_KEY: ${{ secrets.VAGRANT_SSH_KEY }}
           IMAGE_TAG: ${{secrets.IMAGE_TAG}}
         run: |
+          rm /tmp/id_rsa
           echo "$VAGRANT_SSH_KEY" | tr -d '\r' > /tmp/id_rsa
           chmod 0400 /tmp/id_rsa
           ssh -i /tmp/id_rsa -p 2222 vagrant@127.0.0.1 ls -l
