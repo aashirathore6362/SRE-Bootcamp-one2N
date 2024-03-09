@@ -21,5 +21,4 @@ start-db:
 db-migrate:
 	docker compose up db_migrate
 compose-flask-app:
-	docker compose up flask_app
-
+	docker compose up flask_ap
