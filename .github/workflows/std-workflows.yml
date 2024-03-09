@@ -20,17 +20,19 @@ jobs:
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
       
       - name: Get Hash
-        id: hash
+        id: get_commit_hash
         run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")"
 
-      - name: Check Hash
-        run: echo "${{ env.hash }}"
+      - name: Export commit id.
+        run: |
+          export SHORT_COMMIT_HASH=${{ steps.get_commit_hash.outputs.hash }}
+          echo "Stage export completed."
 
       - name: Building flask application.
         run: |
           make docker-build
         env:
-          IMAGE_TAG: $GITHUB_HASH
+          IMAGE_TAG: "${{ env.hash }}"
 
       - name: Run docker build.
         run: |
