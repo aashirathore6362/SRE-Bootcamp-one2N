@@ -55,7 +55,7 @@ jobs:
           echo "$VAGRANT_SSH_KEY" | tr -d '\r' > /tmp/id_rsa
           chmod 0400 /tmp/id_rsa
           ssh -i /tmp/id_rsa -p 2222 vagrant@127.0.0.1 ls -l
-          sed "s/IMAGE_TAG/${{env.git_hash}}/" docker-compose-prod.yml.example > docker-compose-prod.yml
+          sed "s/IMAGE_TAG/${{env.git_hash}}/g" docker-compose-prod.yml.example > docker-compose-prod.yml
           echo "sed completed."
           scp -i id_rsa -P 2222 docker-compose-prod.yml vagrant@127.0.0.1:/home/vagrant
           ssh -i id_rsa -p 2222 vagrant@127.0.0.1 "sudo docker compose -f docker-compose-prod.yml up -d"
