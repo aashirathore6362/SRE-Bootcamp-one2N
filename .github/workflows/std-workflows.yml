@@ -32,7 +32,7 @@ jobs:
         run: |
           make docker-build
         env:
-          IMAGE_TAG: "${{ env.hash }}"
+          IMAGE_TAG: "${{ SHORT_COMMIT_HASH }}"
 
       - name: Run docker build.
         run: |
@@ -43,7 +43,7 @@ jobs:
           make docker_push
         env:
           USERNAME: ${{secrets.DOCKER_USERNAME}}
-          IMAGE_TAG: ${{ env.hash }}
+          IMAGE_TAG: "${{ SHORT_COMMIT_HASH }}"
   CD:
     runs-on: self-hosted
     steps:
