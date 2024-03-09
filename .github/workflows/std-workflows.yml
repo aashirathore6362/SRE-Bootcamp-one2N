@@ -25,14 +25,12 @@ jobs:
 
       - name: Export commit id.
         run: |
-          export SHORT_COMMIT_HASH=${{ steps.get_commit_hash.outputs.hash }}
+          export IMAGE_TAG=${{ steps.get_commit_hash.outputs.hash }}
           echo "Stage export completed."
 
       - name: Building flask application.
         run: |
           make docker-build
-        env:
-          IMAGE_TAG: $SHORT_COMMIT_HASH
 
       - name: Run docker build.
         run: |
