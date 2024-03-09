@@ -21,7 +21,7 @@ jobs:
       
       - name: Get Hash
         id: get_commit_hash
-        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")"
+        run: echo "::set-output git_hash=$(git rev-parse --short "$GITHUB_SHA")"
 
       - name: Export commit id.
         run: |
@@ -31,6 +31,8 @@ jobs:
       - name: Building flask application.
         run: |
           make docker-build
+        env:
+          IMAGE_TAG: ${{ steps.get_commit_hash.outputs.hash }}
 
       - name: Run docker build.
         run: |
@@ -41,7 +43,7 @@ jobs:
           make docker_push
         env:
           USERNAME: ${{secrets.DOCKER_USERNAME}}
-          IMAGE_TAG: $SHORT_COMMIT_HASH
+          IMAGE_TAG: ${{ steps.get_commit_hash.outputs.hash }}
   CD:
     runs-on: self-hosted
     steps:
