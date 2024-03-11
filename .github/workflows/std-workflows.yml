@@ -6,7 +6,9 @@ on:
      - exercise-05
 jobs:
   CI:
+    name: CI-Job
     runs-on: self-hosted
+
     steps:
       - run: echo "The job was automatically triggered by a Push event."
      
@@ -40,7 +42,10 @@ jobs:
           USERNAME: ${{secrets.DOCKER_USERNAME}}
           IMAGE_TAG: ${{ env.git_hash }}
   CD:
+    name: CD-job
+    needs: CI
     runs-on: self-hosted
+
     steps:
       - name: Get Hash
         id: get_commit_hash
@@ -56,6 +61,5 @@ jobs:
           chmod 0400 /tmp/id_rsa
           ssh -i /tmp/id_rsa -p 2222 vagrant@127.0.0.1 ls -l
           sed "s/IMAGE_TAG/${{env.git_hash}}/g" docker-compose-prod.yml.example > docker-compose-prod.yml
-          echo "sed completed."
           scp -i id_rsa -P 2222 docker-compose-prod.yml vagrant@127.0.0.1:/home/vagrant
           ssh -i id_rsa -p 2222 vagrant@127.0.0.1 "sudo docker compose -f docker-compose-prod.yml up -d"
