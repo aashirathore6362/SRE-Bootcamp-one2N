@@ -42,7 +42,7 @@ jobs:
           USERNAME: ${{secrets.DOCKER_USERNAME}}
           IMAGE_TAG: ${{ env.git_hash }}
   CD:
-    name: CD-job
+    name: CD-Job
     needs: CI
     runs-on: self-hosted
 
