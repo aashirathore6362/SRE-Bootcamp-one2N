@@ -1,12 +1,14 @@
 name: GitHub Actions CI/CD
-run-name: Deploy Local CI.
+run-name: CI/CD.
 on:
   push:
     branches:
-      - exercise-04
+     - '*'
 jobs:
   CI:
-    runs-on: ubuntu-latest
+    name: CI-Job
+    runs-on: self-hosted
+
     steps:
       - run: echo "The job was automatically triggered by a Push event."
      
@@ -18,12 +20,16 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+      
+      - name: Get Hash
+        id: get_commit_hash
+        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
 
       - name: Building flask application.
         run: |
           make docker-build
         env:
-          IMAGE_TAG: ${{secrets.IMAGE_TAG}}
+          IMAGE_TAG: ${{ env.git_hash }}
 
       - name: Run docker build.
         run: |
@@ -34,4 +40,26 @@ jobs:
           make docker_push
         env:
           USERNAME: ${{secrets.DOCKER_USERNAME}}
-          IMAGE_TAG: ${{secrets.IMAGE_TAG}}
+          IMAGE_TAG: ${{ env.git_hash }}
+  CD:
+    name: CD-Job
+    needs: CI
+    runs-on: self-hosted
+
+    steps:
+      - name: Get Hash
+        id: get_commit_hash
+        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+
+      - name: Set up SSH key and Trigger deployment.
+        env:
+          VAGRANT_SSH_KEY: ${{ secrets.VAGRANT_SSH_KEY }}
+          IMAGE_TAG: ${{ env.git_hash }}
+        run: |
+          rm /tmp/id_rsa
+          echo "$VAGRANT_SSH_KEY" | tr -d '\r' > /tmp/id_rsa
+          chmod 0400 /tmp/id_rsa
+          ssh -i /tmp/id_rsa -p 2222 vagrant@127.0.0.1 ls -l
+          sed "s/IMAGE_TAG/${{env.git_hash}}/g" docker-compose-prod.yml.example > docker-compose-prod.yml
+          scp -i id_rsa -P 2222 docker-compose-prod.yml vagrant@127.0.0.1:/home/vagrant
+          ssh -i id_rsa -p 2222 vagrant@127.0.0.1 "sudo docker compose -f docker-compose-prod.yml up -d"

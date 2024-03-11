@@ -8,8 +8,8 @@ run-app:run
 
 #Push the docker image
 docker_push:
-	docker tag studentapi:$(IMAGE_TAG) ${USERNAME}/studentapi:1.0.0
-	docker push ${USERNAME}/studentapi:1.0.0
+	docker tag studentapi:$(IMAGE_TAG) ${USERNAME}/studentapi:$(IMAGE_TAG)
+	docker push ${USERNAME}/studentapi:$(IMAGE_TAG)
 
 docker-build:
 	docker build -t studentapi:$(IMAGE_TAG) .
@@ -21,5 +21,4 @@ start-db:
 db-migrate:
 	docker compose up db_migrate
 compose-flask-app:
-	docker compose up flask_app
-
+	docker compose up flask_ap
