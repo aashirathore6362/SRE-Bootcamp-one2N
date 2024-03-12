@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: student-api
+spec:
+  selector:
+    matchLabels:
+      app: student-api
+  template:
+    metadata:
+      labels:
+        app: student-api
+    spec:
+      containers:
+        - name: flask-app
+          image: aashirathore111/studentapi:925ffb3
+          ports:
+            - containerPort: 4000
+          env:
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: db_url
+                  name: app-configmap
+      initContainers:
+        - name: init-db-migration
+          image: aashirathore111/studentapi:925ffb3
+          command: ['sh','-c','']
+          env:
+          - name: DB_URL
+            valueFrom:
+              configMapKeyRef:
+                key: db_url
+                name: app-configmap
+          - name: MIGRATION
+            valueFrom:
+                configMapKeyRef:
+                  key: migration
+                  name: app-configmap
+      imagePullSecrets:
+        - name: myregistrykey
+      nodeSelector:
+        name: application    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  ports:
+  - port: 5432
+    name: postgresdb
+  clusterIP: None
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgresdb
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  serviceName: "postgres"
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres-db
+          image: postgres:12
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+              name: postgresdb
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: postgres_user
+                  name: postgres-secret
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgres_password
+                  name: postgres-secret
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: postgres_db
+                  name: app-configmap
+      nodeSelector:
+        name: dependent_services
