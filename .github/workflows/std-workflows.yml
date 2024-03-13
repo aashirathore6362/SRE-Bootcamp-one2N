@@ -56,7 +56,6 @@ jobs:
           IMAGE_TAG: ${{ env.git_hash }}
         run: |
             echo "Running kubernetes deployment with latest image."
-            sed "s/IMAGE_TAG/${{env.git_hash}}/g" application.yaml > application.yaml
+            sed -i "s/IMAGE_TAG/${{env.git_hash}}/g" application.yaml
             kubectl config get-contexts
-            kubectl delete -f application.yaml
             kubectl apply -f application.yaml
