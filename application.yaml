@@ -1,3 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: student-api-service
+  namespace: student-api
+  labels:
+    app: student-api
+spec:
+    ports:
+    - port: 4000
+      protocol: TCP
+      targetPort: 5000
+    selector:
+      app: student-api
+    type: NodePort
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,9 +31,9 @@ spec:
     spec:
       containers:
         - name: flask-app
-          image: aashirathore111/studentapi:925ffb3
+          image: aashirathore111/studentapi:IMAGE_TAG
           ports:
-            - containerPort: 4000
+            - containerPort: 5000
           env:
             - name: DB_URL
               valueFrom:
@@ -26,8 +42,7 @@ spec:
                   name: app-configmap
       initContainers:
         - name: init-db-migration
-          image: aashirathore111/studentapi:925ffb3
-          command: ['sh','-c','']
+          image: aashirathore111/studentapi:IMAGE_TAG
           env:
           - name: DB_URL
             valueFrom:
@@ -98,3 +113,33 @@ spec:
                   name: app-configmap
       nodeSelector:
         name: dependent_services
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-configmap
+  labels:
+    app: postgres
+data:
+  postgres_db: postgres
+  db_url: postgresql://postgres:postgres@postgres:5432/postgres
+  migration: "TRUE"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+type: Opaque
+data:
+    postgres_user: cG9zdGdyZXM=
+    postgres_password: cG9zdGdyZXM=
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: myregistrykey
+  namespace: student-api
+data:
+  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CgkJCSJhdXRoIjogIllXRnphR2x5WVhSb2IzSmxNVEV4T2tsaVpIQnBkRFl6TmpJNE1DRT0iCgkJfQoJfQp9
+type: kubernetes.io/dockerconfigjson
