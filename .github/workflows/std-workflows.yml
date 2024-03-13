@@ -41,21 +41,25 @@ jobs:
         env:
           USERNAME: ${{secrets.DOCKER_USERNAME}}
           IMAGE_TAG: ${{ env.git_hash }}
-  # CD:
-  #   name: CD-Job
-  #   needs: CI
-  #   runs-on: self-hosted
+  CD:
+    name: CD-Job
+    needs: CI
+    runs-on: self-hosted
 
-  #   steps:
-  #     - name: Get Hash
-  #       id: get_commit_hash
-  #       run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+    steps:
+      - name: Get Hash
+        id: get_commit_hash
+        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
 
-  #     - name: Set up SSH key and Trigger deployment.
-  #       env:
-  #         VAGRANT_SSH_KEY: ${{ secrets.VAGRANT_SSH_KEY }}
-  #         IMAGE_TAG: ${{ env.git_hash }}
-  #       run: |
+      - name: Set up SSH key and Trigger deployment.
+        env:
+          VAGRANT_SSH_KEY: ${{ secrets.VAGRANT_SSH_KEY }}
+          IMAGE_TAG: ${{ env.git_hash }}
+        run: |
+            echo "Running kubernetes deployment with latest image."
+            sed "s/IMAGE_TAG/${{env.git_hash}}/g" application.yaml > application.yaml
+            echo "Apply kubernetes deployment."
+            kubectl apply -f application.yaml --namespace student-api
   #         rm /tmp/id_rsa
   #         echo "$VAGRANT_SSH_KEY" | tr -d '\r' > /tmp/id_rsa
   #         chmod 0400 /tmp/id_rsa
