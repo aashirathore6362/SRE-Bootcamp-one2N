@@ -60,6 +60,8 @@ jobs:
             sed "s/IMAGE_TAG/${{env.git_hash}}/g" application.yaml > application.yaml
             echo "Apply kubernetes deployment."
             kubectl config get-contexts
+            ls -ltr
+            kubectl apply -f application.yaml --namespace student-api
   #         rm /tmp/id_rsa
   #         echo "$VAGRANT_SSH_KEY" | tr -d '\r' > /tmp/id_rsa
   #         chmod 0400 /tmp/id_rsa
