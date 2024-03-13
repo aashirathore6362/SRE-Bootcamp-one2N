@@ -5,15 +5,15 @@ on:
     branches:
      - '*'
 jobs:
-  # CI:
-  #   name: CI-Job
-  #   runs-on: self-hosted
+  CI:
+    name: CI-Job
+    runs-on: self-hosted
 
-  #   steps:
-  #     - run: echo "The job was automatically triggered by a Push event."
+    steps:
+      - run: echo "The job was automatically triggered by a Push event."
      
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       # - name: Docker Login
       #   uses: docker/login-action@v1
