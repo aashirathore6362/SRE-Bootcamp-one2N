@@ -5,15 +5,15 @@ on:
     branches:
      - '*'
 jobs:
-  CI:
-    name: CI-Job
-    runs-on: self-hosted
+  # CI:
+  #   name: CI-Job
+  #   runs-on: self-hosted
 
-    steps:
-      - run: echo "The job was automatically triggered by a Push event."
+  #   steps:
+  #     - run: echo "The job was automatically triggered by a Push event."
      
-      - name: Checkout code
-        uses: actions/checkout@v3
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
       # - name: Docker Login
       #   uses: docker/login-action@v1
@@ -43,7 +43,7 @@ jobs:
       #     IMAGE_TAG: ${{ env.git_hash }}
   CD:
     name: CD-Job
-    needs: CI
+    # needs: CI
     runs-on: self-hosted
 
     steps:
@@ -57,7 +57,7 @@ jobs:
           IMAGE_TAG: ${{ env.git_hash }}
         run: |
             echo "Running kubernetes deployment with latest image."
-            sed "s/IMAGE_TAG/${{env.git_hash}}/g" application.yaml > application.yaml
+            sed "s/IMAGE_TAG/${{env.git_hash}}/g" application.yaml.example > application.yaml
             echo "Apply kubernetes deployment."
             kubectl config get-contexts
             ls -ltr
