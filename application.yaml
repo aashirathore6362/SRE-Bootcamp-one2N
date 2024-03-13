@@ -18,6 +18,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-deployment
+  namespace: student-api
   labels:
     app: student-api
 spec:
@@ -63,6 +64,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres
+  namespace: student-api
   labels:
     app: postgres
 spec:
@@ -77,6 +79,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgresdb
+  namespace: student-api
 spec:
   selector:
     matchLabels:
@@ -118,6 +121,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-configmap
+  namespace: student-api
   labels:
     app: postgres
 data:
@@ -130,6 +134,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: postgres-secret
+  namespace: student-api
 type: Opaque
 data:
     postgres_user: cG9zdGdyZXM=

@@ -15,35 +15,35 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: Docker Login
-      #   uses: docker/login-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
       
-      # - name: Get Hash
-      #   id: get_commit_hash
-      #   run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+      - name: Get Hash
+        id: get_commit_hash
+        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
 
-      # - name: Building flask application.
-      #   run: |
-      #     make docker-build
-      #   env:
-      #     IMAGE_TAG: ${{ env.git_hash }}
+      - name: Building flask application.
+        run: |
+          make docker-build
+        env:
+          IMAGE_TAG: ${{ env.git_hash }}
 
-      # - name: Run docker build.
-      #   run: |
-      #     make start-db
+      - name: Run docker build.
+        run: |
+          make start-db
 
-      # - name: Push the Image into dockerHub.
-      #   run: |
-      #     make docker_push
-      #   env:
-      #     USERNAME: ${{secrets.DOCKER_USERNAME}}
-      #     IMAGE_TAG: ${{ env.git_hash }}
+      - name: Push the Image into dockerHub.
+        run: |
+          make docker_push
+        env:
+          USERNAME: ${{secrets.DOCKER_USERNAME}}
+          IMAGE_TAG: ${{ env.git_hash }}
   CD:
     name: CD-Job
-    # needs: CI
+    needs: CI
     runs-on: self-hosted
 
     steps:
@@ -51,21 +51,11 @@ jobs:
         id: get_commit_hash
         run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
 
-      - name: Set up SSH key and Trigger deployment.
+      - name: Trigger deployment in Kubernetes.
         env:
-          VAGRANT_SSH_KEY: ${{ secrets.VAGRANT_SSH_KEY }}
           IMAGE_TAG: ${{ env.git_hash }}
         run: |
             echo "Running kubernetes deployment with latest image."
-            sed "s/IMAGE_TAG/${{env.git_hash}}/g" application.yaml.example > application.yaml
-            echo "Apply kubernetes deployment."
+            sed "s/IMAGE_TAG/${{env.git_hash}}/g" application.yaml > application.yaml
             kubectl config get-contexts
-            ls -ltr
-            kubectl apply -f application.yaml --namespace student-api
-  #         rm /tmp/id_rsa
-  #         echo "$VAGRANT_SSH_KEY" | tr -d '\r' > /tmp/id_rsa
-  #         chmod 0400 /tmp/id_rsa
-  #         ssh -i /tmp/id_rsa -p 2222 vagrant@127.0.0.1 ls -l
-  #         sed "s/IMAGE_TAG/${{env.git_hash}}/g" docker-compose-prod.yml.example > docker-compose-prod.yml
-  #         scp -i id_rsa -P 2222 docker-compose-prod.yml vagrant@127.0.0.1:/home/vagrant
-  #         ssh -i id_rsa -p 2222 vagrant@127.0.0.1 "sudo docker compose -f docker-compose-prod.yml up -d"
+            kubectl apply -f application.yaml
