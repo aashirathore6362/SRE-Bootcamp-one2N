@@ -40,7 +40,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: db_url
-                  name: app-configmap
+                  name: postgres-secret
       initContainers:
         - name: init-db-migration
           image: aashirathore111/studentapi:IMAGE_TAG
@@ -49,7 +49,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 key: db_url
-                name: app-configmap
+                name: postgres-secret
           - name: MIGRATION
             valueFrom:
                 configMapKeyRef:
