@@ -38,7 +38,7 @@ spec:
           env:
             - name: DB_URL
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   key: db_url
                   name: app-configmap
       initContainers:
@@ -47,7 +47,7 @@ spec:
           env:
           - name: DB_URL
             valueFrom:
-              configMapKeyRef:
+              secretKeyRef:
                 key: db_url
                 name: app-configmap
           - name: MIGRATION
@@ -126,7 +126,6 @@ metadata:
     app: postgres
 data:
   postgres_db: postgres
-  db_url: postgresql://postgres:postgres@postgres:5432/postgres
   migration: "TRUE"
 
 ---
@@ -139,6 +138,7 @@ type: Opaque
 data:
     postgres_user: cG9zdGdyZXM=
     postgres_password: cG9zdGdyZXM=
+    db_url: cG9zdGdyZXNxbDovL3Bvc3RncmVzOnBvc3RncmVzQHBvc3RncmVzOjU0MzIvcG9zdGdyZXM=
 ---
 apiVersion: v1
 kind: Secret
