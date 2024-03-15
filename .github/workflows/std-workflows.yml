@@ -58,4 +58,4 @@ jobs:
             echo "Running kubernetes deployment with latest image."
             sed -i "s/IMAGE_TAG/${{env.git_hash}}/g" helmcharts/values.yaml
             kubectl config get-contexts
-            helm install templates .
+            cd helmcharts && helm install templates .
