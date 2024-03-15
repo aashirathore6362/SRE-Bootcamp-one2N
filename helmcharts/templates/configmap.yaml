@@ -1,0 +1,10 @@
+apiVersion: {{ .Values.apiVersion | default "v1" }}
+kind: ConfigMap
+metadata:
+  name: app-configmap
+  namespace: {{.Values.namespace.getns}}
+  labels:
+    app: postgres
+data:
+  postgres_db: postgres
+  migration: "TRUE"

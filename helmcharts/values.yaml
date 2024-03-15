@@ -1,0 +1,48 @@
+# Default values for helmcharts.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+namespace:
+  getns: student-api
+image:
+  repository: aashirathore111/studentapi
+  pullPolicy: IfNotPresent
+  dbimage: postgres:12
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+replicascount: 1
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+minreadyseconds: 10
+#ApiVersion for the Resource(defaults to "monitoring.coreos.com/v1")
+apiVersion: ""
+
+service:
+  type: NodePort
+  port: 5000
+  targetport: 5000
+  dbserviceport: 5432
+
+secret:
+  type: Opaque
+  user: postgres
+  password: postgres
+  dburl: postgresql://postgres:postgres@postgres:5432/postgres
+  auth: ewoJImF1dGhzIjogewoJCSJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CgkJCSJhdXRoIjogIllXRnphR2x5WVhSb2IzSmxNVEV4T2tsaVpIQnBkRFl6TmpJNE1DRT0iCgkJfQoJfQp9
+
+containerport: 5000
+dbcontainerport: 5432
+
+nodeSelector: {
+    appnode: "application",
+    dbnode: "dependent_services"
+}
+
+tolerations: []
+
+affinity: {}

@@ -1,0 +1,6 @@
+apiVersion: {{ .Values.apiVersion | default "v1" }}
+kind: Namespace
+metadata:
+    name: {{.Values.namespace.getns}}
+    labels:
+        name: app-ns
