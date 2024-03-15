@@ -1,0 +1,46 @@
+apiVersion: {{ .Values.apiVersion | default "apps/v1" }}
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: {{.Values.namespace.getns}}
+  labels:
+    {{- include "mycharts.labels" .}}
+spec:
+  replicas: {{.Values.replicascount}}
+  selector:
+    matchLabels:
+      {{- include "mycharts.labels" .}}
+  template:
+    metadata:
+      labels:
+        {{- include "mycharts.labels" .}}
+    spec:
+      containers:
+        - name: flask-app
+          image: {{.Values.image.repository}}
+          ports:
+            - containerPort: {{.Values.containerport}}
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  key: db_url
+                  name: postgres-secret
+      initContainers:
+        - name: init-db-migration
+          image: {{.Values.image.repository}}
+          env:
+          - name: DB_URL
+            valueFrom:
+              secretKeyRef:
+                key: db_url
+                name: postgres-secret
+          - name: MIGRATION
+            valueFrom:
+                configMapKeyRef:
+                  key: migration
+                  name: app-configmap
+      imagePullSecrets:
+        - name: myregistrykey
+      nodeSelector:
+        name: {{.Values.nodeSelector.appnode}}    

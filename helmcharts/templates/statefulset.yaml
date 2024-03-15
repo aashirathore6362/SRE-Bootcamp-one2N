@@ -1,0 +1,41 @@
+apiVersion: {{ .Values.apiVersion | default "apps/v1" }}
+kind: StatefulSet
+metadata:
+  name: postgresdb
+  namespace: {{.Values.namespace.getns}}
+spec:
+  selector:
+    matchLabels:
+      {{- include "mydb.labels" .}}
+  serviceName: "postgres"
+  minReadySeconds: {{.Values.minreadyseconds}}
+  template:
+    metadata:
+      labels:
+          {{- include "mydb.labels" .}}
+    spec:
+      containers:
+        - name: postgres-db
+          image: {{.Values.image.dbimage}}
+          imagePullPolicy: {{.Values.image.imagePullPolicy}}
+          ports:
+            - containerPort: {{.Values.dbcontainerport}}
+              name: postgresdb
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: postgres_user
+                  name: postgres-secret
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgres_password
+                  name: postgres-secret
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: postgres_db
+                  name: app-configmap
+      nodeSelector:
+        name: {{.Values.nodeSelector.dbnode}}
