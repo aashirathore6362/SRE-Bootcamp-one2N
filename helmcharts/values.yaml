@@ -26,6 +26,7 @@ service:
   type: NodePort
   port: 5000
   targetport: 5000
+  dbserviceport: 5432
 
 secret:
   type: Opaque

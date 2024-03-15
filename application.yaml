@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: flask-app
-          image: aashirathore111/studentapi:d852ef1
+          image: aashirathore111/studentapi:IMAGE_TAG
           ports:
             - containerPort: 5000
           env:
@@ -43,7 +43,7 @@ spec:
                   name: postgres-secret
       initContainers:
         - name: init-db-migration
-          image: aashirathore111/studentapi:d852ef1
+          image: aashirathore111/studentapi:IMAGE_TAG
           env:
           - name: DB_URL
             valueFrom:
