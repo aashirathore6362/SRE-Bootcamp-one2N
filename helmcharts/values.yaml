@@ -7,7 +7,7 @@ replicaCount: 1
 namespace:
   getns: student-api
 image:
-  repository: aashirathore111/studentapi:IMAGE_TAG
+  repository: aashirathore111/studentapi
   pullPolicy: IfNotPresent
   dbimage: postgres:12
   # Overrides the image tag whose default is the chart appVersion.

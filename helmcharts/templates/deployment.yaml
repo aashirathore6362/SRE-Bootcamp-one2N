@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: flask-app
-          image: {{.Values.image.repository}}
+          image: {{.Values.image.repository}}:{{.Values.image.tag}}
           ports:
             - containerPort: {{.Values.containerport}}
           env:
@@ -28,7 +28,7 @@ spec:
                   name: postgres-secret
       initContainers:
         - name: init-db-migration
-          image: {{.Values.image.repository}}
+          image: {{.Values.image.repository}}:{{.Values.image.tag}}
           env:
           - name: DB_URL
             valueFrom:
