@@ -1,0 +1,19 @@
+project: default
+source:
+  repoURL: 'https://github.com/aashirathore6362/SRE-Bootcamp-one2N'
+  path: helmcharts
+  targetRevision: exercise-09
+  helm:
+    valueFiles:
+      - values.yaml
+    parameters:
+      - name: image.tag
+        value: imagetag
+      - name: migration
+        value: 'TRUE'
+destination:
+  server: 'https://kubernetes.default.svc'
+  namespace: student-api
+syncPolicy:
+  automated:
+    selfHeal: true
