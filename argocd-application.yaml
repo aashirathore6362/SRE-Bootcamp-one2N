@@ -15,7 +15,7 @@ spec:
         - "values.yaml"
       parameters:
           - name: image.tag
-            value: ''
+            value: 
   sources: []
   project: default
   syncPolicy:
