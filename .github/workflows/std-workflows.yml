@@ -56,6 +56,6 @@ jobs:
           IMAGE_TAG: ${{ env.git_hash }}
         run: |
             echo "Running kubernetes deployment with latest image."
-            sed -i "s/tag:.*/tag:\ ${{ env.git_hash }}/g" helmcharts/values.yaml
+            sed -i "s/value:.*/value:\ ${{ env.git_hash }}/g" argocd-application.yaml
             kubectl config get-contexts
 

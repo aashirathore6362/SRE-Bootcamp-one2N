@@ -13,10 +13,14 @@ spec:
     helm:
       valueFiles:
         - "values.yaml"
+      parameters:
+          - name: image.tag
+            value: ''
   sources: []
   project: default
   syncPolicy:
     automated:
       prune: false
       selfHeal: true
-    syncOptions: []
+    syncOptions:
+    - CreateNamespace=true
