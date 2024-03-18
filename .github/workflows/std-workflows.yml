@@ -57,6 +57,5 @@ jobs:
         run: |
             echo "Running kubernetes deployment with latest image."
             kubectl config get-contexts
-            sed -i "s/imagetag/${{ env.git_hash }}/g" argoCD-application.yaml
-            sed -i "s/TRUE/FALSE/g" argoCD-application.yaml
+            cd helmcharts && helm install templates .
 
