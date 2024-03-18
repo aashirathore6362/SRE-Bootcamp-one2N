@@ -42,7 +42,7 @@ nodeSelector: {
     appnode: "application",
     dbnode: "dependent_services"
 }
-migration: ""
+
 tolerations: []
 
 affinity: {}
