@@ -7,4 +7,4 @@ metadata:
     app: postgres
 data:
   postgres_db: postgres
-  migration: "TRUE"
+  migration: {{ .Values.migration | default "TRUE" }}
