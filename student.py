@@ -20,7 +20,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     stdname = db.Column(db.String(80), unique=False, nullable=False)
     title = db.Column(db.String(80), unique=True, nullable=False)
-    rollno = db.Column(db.Integer, unique=True)
+    #rollno = db.Column(db.Integer, unique=True)
 
     def json(self):
         return {'id': self.id, 'stdname': self.stdname,'title': self.title}
