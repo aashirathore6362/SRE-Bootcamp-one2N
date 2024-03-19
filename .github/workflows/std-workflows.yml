@@ -8,46 +8,47 @@ on:
      - 'helmcharts/**'
     #  - '.github/**'
 jobs:
-  # CI:
-  #   name: CI-Job
-  #   runs-on: self-hosted
+  CI:
+    name: CI-Job
+    runs-on: self-hosted
 
-  #   steps:
-  #     - run: echo "The job was automatically triggered by a Push event."
+    steps:
+      - run: echo "The job was automatically triggered by a Push event."
      
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  #     - name: Docker Login
-  #       uses: docker/login-action@v1
-  #       with:
-  #         username: ${{ secrets.DOCKER_USERNAME }}
-  #         password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
       
-  #     - name: Get Hash
-  #       id: get_commit_hash
-  #       run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+      - name: Get Hash
+        id: get_commit_hash
+        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
 
-  #     - name: Building flask application.
-  #       run: |
-  #         make docker-build
-  #       env:
-  #         IMAGE_TAG: ${{ env.git_hash }}
+      - name: Building flask application.
+        run: |
+          make docker-build
+        env:
+          IMAGE_TAG: ${{ env.git_hash }}
 
-  #     - name: Run docker build.
-  #       run: |
-  #         make start-db
+      - name: Run docker build.
+        run: |
+          make start-db
 
-  #     - name: Push the Image into dockerHub.
-  #       run: |
-  #         make docker_push
-  #       env:
-  #         USERNAME: ${{secrets.DOCKER_USERNAME}}
-  #         IMAGE_TAG: ${{ env.git_hash }}
-    CD:
+      - name: Push the Image into dockerHub.
+        run: |
+          make docker_push
+        env:
+          USERNAME: ${{secrets.DOCKER_USERNAME}}
+          IMAGE_TAG: ${{ env.git_hash }}
+  CD:
       name: argocd-application
+      needs: CI
       runs-on: self-hosted
-
+      
       steps:
         - name: Checkout code
           uses: actions/checkout@v3
