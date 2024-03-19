@@ -4,8 +4,9 @@ on:
   push:
     branches:
      - '*'
-    # paths:
-    #  - '**.js'
+    paths-ignore:
+     - 'helmcharts/**'
+     - '.github/**'
 jobs:
   CI:
     name: CI-Job
