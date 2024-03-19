@@ -63,7 +63,12 @@ jobs:
 
         - name: Update value.yaml file.
           run: sed -i "s/tag:.*/tag:\ ${{ env.git_hash }}/g" helmcharts/values.yaml
-
+        
+        - name: git commit and push values.yaml
+          run: |
+              git add helmcharts/values.yaml
+              git commit -m "updated values in helm"
+              git push --set-upstream origin exercise-09
 
 #   CD:
 #     name: CD-Job
