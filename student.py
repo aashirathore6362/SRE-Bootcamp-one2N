@@ -21,8 +21,6 @@ class User(db.Model):
     stdname = db.Column(db.String(80), unique=False, nullable=False)
     title = db.Column(db.String(80), unique=True, nullable=False)
     rollno = db.Column(db.Integer, unique=True)
-    rollnew = db.Column(db.Integer, unique=True)
-
 
     def json(self):
         return {'id': self.id, 'stdname': self.stdname,'title': self.title}
