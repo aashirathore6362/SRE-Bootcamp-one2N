@@ -13,9 +13,9 @@ spec:
     helm:
       valueFiles:
         - "values.yaml"
-      parameters:
-          - name: image.tag
-            value: 
+      # parameters:
+      #     - name: image.tag
+      #       value: "3bfdc23"
   sources: []
   project: default
   syncPolicy:
