@@ -67,6 +67,7 @@ def get_std(id):
 @app.route('/api/v1/student/<int:id>', methods=['PUT'])
 def update_std(id):
     try:
+        app.logger.info("From route Update request.")
         updatestd = User.query.filter_by(id=id).first()
         if updatestd:
             data = request.get_json()
