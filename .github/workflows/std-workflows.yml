@@ -4,6 +4,9 @@ on:
   push:
     branches:
      - '*'
+    paths-ignore:
+     - 'helmcharts/**'
+     - '.github/**'
 jobs:
   CI:
     name: CI-Job
@@ -42,21 +45,28 @@ jobs:
           USERNAME: ${{secrets.DOCKER_USERNAME}}
           IMAGE_TAG: ${{ env.git_hash }}
   CD:
-    name: CD-Job
-    needs: CI
-    runs-on: self-hosted
+      name: argocd-application
+      needs: CI
+      runs-on: self-hosted
+      
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
 
-    steps:
-      - name: Get Hash
-        id: get_commit_hash
-        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+        - name: Get Hash
+          id: get_commit_hash
+          run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
 
-      - name: Trigger deployment in Kubernetes.
-        env:
-          IMAGE_TAG: ${{ env.git_hash }}
-        run: |
-            echo "Running kubernetes deployment with latest image."
-            sed -i "s/tag:.*/tag:\ ${{ env.git_hash }}/g" helmcharts/values.yaml
-            kubectl config get-contexts
-            cd helmcharts && helm install templates .
+        - name: Git checkout branch
+          run: |
+              git status
+              git checkout exercise-09
 
+        - name: Update value.yaml file.
+          run: sed -i "s/tag:.*/tag:\ ${{ env.git_hash }}/g" helmcharts/values.yaml
+        
+        - name: git commit and push values.yaml
+          run: |
+              git add helmcharts/values.yaml
+              git commit -m "updated values in helm"
+              git push --set-upstream origin exercise-09

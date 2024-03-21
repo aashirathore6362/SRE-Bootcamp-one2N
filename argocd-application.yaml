@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-application
+spec:
+  destination:
+    namespace: student-api
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: helmcharts
+    repoURL: 'https://github.com/aashirathore6362/SRE-Bootcamp-one2N'
+    targetRevision: exercise-09
+    helm:
+      valueFiles:
+        - "values.yaml"
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
