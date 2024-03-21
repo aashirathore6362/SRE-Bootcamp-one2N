@@ -6,7 +6,7 @@ on:
      - '*'
     paths-ignore:
      - 'helmcharts/**'
-    #  - '.github/**'
+     - '.github/**'
 jobs:
   CI:
     name: CI-Job
@@ -70,23 +70,3 @@ jobs:
               git add helmcharts/values.yaml
               git commit -m "updated values in helm"
               git push --set-upstream origin exercise-09
-
-#   CD:
-#     name: CD-Job
-#     needs: CI
-#     runs-on: self-hosted
-
-#     steps:
-#       - name: Get Hash
-#         id: get_commit_hash
-#         run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
-
-#       - name: Trigger deployment in Kubernetes.
-#         env:
-#           IMAGE_TAG: ${{ env.git_hash }}
-#         run: |
-#             echo "Running kubernetes deployment with latest image."
-#             sed -i "s/tag:.*/tag:\ ${{ env.git_hash }}/g" helmcharts/values.yaml
-#             kubectl config get-contexts
-# # cd helmcharts && helm install templates .
-
