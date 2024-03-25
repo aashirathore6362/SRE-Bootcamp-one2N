@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from sqlalchemy.orm import DeclarativeBase
 import logging
 
-logging.basicConfig(filename="logs.log",format="%(levelname)s:%(name)s:%(message)s")
+logging.basicConfig(format="%(levelname)s:%(name)s:%(message)s")
 app = Flask(__name__)
 
 class Base(DeclarativeBase):
