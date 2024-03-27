@@ -7,6 +7,9 @@ on:
     paths-ignore:
      - 'helmcharts/**'
      - '.github/**'
+     - 'blackbox-exporter-values.yaml'
+     - 'loki-values.yaml'
+     - 'pg-exporter-values.yaml'
 jobs:
   CI:
     name: CI-Job
