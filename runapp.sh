@@ -6,5 +6,5 @@ then
     flask db upgrade
 else
     echo "Migrations not running.";
-    flask run --debug
+    flask run
 fi;
