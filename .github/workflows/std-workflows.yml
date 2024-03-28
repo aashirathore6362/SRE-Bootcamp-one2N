@@ -7,6 +7,7 @@ on:
     paths-ignore:
      - 'helmcharts/**'
      - '.github/**'
+     
 jobs:
   CI:
     name: CI-Job
@@ -60,7 +61,7 @@ jobs:
         - name: Git checkout branch
           run: |
               git status
-              git checkout exercise-09
+              git checkout exercise-10
 
         - name: Update value.yaml file.
           run: sed -i "s/tag:.*/tag:\ ${{ env.git_hash }}/g" helmcharts/values.yaml
@@ -69,4 +70,4 @@ jobs:
           run: |
               git add helmcharts/values.yaml
               git commit -m "updated values in helm"
-              git push --set-upstream origin exercise-09
+              git push --set-upstream origin exercise-10

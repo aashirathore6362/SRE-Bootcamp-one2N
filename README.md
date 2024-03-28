@@ -67,3 +67,23 @@ make compose-flask-app
 make db-migrate
 
 ```
+**Setup of observability stack:**
+Prometheus, Loki, and Grafana deploy using helm charts, observability folder overrides values file of observability stack.
+
+In this values.yaml file defined a serviceMonitoring, config properties.
+
+```
+helm install --values loki-values.yaml loki grafana/loki-stack
+```
+
+```
+helm install pg-exporter -f pg-exporter-values.yml prometheus-community/prometheus-postgres-exporter
+```
+
+```
+helm install blackbox-exporter -f blackbox-exporter-values.yaml prometheus-community/prometheus-blackbox-exporter
+```
+
+```
+helm list -A
+```
