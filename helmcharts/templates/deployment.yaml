@@ -45,11 +45,6 @@ spec:
                 configMapKeyRef:
                   key: migration
                   name: app-configmap
-          - name: FLASK_RUN_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: flask_run_host
-                  name: app-configmap
       imagePullSecrets:
         - name: myregistrykey
       nodeSelector:

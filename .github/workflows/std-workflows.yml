@@ -5,8 +5,8 @@ on:
     branches:
      - '*'
     paths-ignore:
-    #  - 'helmcharts/**'
-     - '.github/**'
+     - 'helmcharts/**'
+    #  - '.github/**'
      
 jobs:
   CI:
