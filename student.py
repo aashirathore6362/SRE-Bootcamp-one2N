@@ -4,9 +4,13 @@ from os import environ
 from flask_migrate import Migrate
 from sqlalchemy.orm import DeclarativeBase
 import logging
+from prometheus_flask_exporter import PrometheusMetrics
 
 logging.basicConfig(format="%(levelname)s:%(name)s:%(message)s")
 app = Flask(__name__)
+
+metrics = PrometheusMetrics(app)
+metrics.info('app_info','This is student application in Flask', version='1.0.0')
 
 class Base(DeclarativeBase):
   pass
