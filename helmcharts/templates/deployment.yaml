@@ -26,6 +26,11 @@ spec:
                 secretKeyRef:
                   key: db_url
                   name: postgres-secret
+            - name: FLASK_RUN_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: flask_run_host
+                  name: app-configmap
       initContainers:
         - name: init-db-migration
           image: {{.Values.image.repository}}:{{.Values.image.tag}}
