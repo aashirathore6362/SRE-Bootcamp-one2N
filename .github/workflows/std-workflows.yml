@@ -6,7 +6,7 @@ on:
      - '*'
     paths-ignore:
      - 'helmcharts/**'
-    #  - '.github/**'
+     - '.github/**'
      
 jobs:
   CI:

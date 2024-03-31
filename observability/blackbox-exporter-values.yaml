@@ -270,12 +270,10 @@ serviceMonitor:
   ## https://github.com/coreos/prometheus-operator for blackbox-exporter itself
   ##
   selfMonitor:
-    enabled: True
+    enabled: false
     additionalMetricsRelabels: {}
     additionalRelabeling: []
-    labels: {
-      release: prometheus
-    }
+    labels: {}
     path: /metrics
     interval: 30s
     scrapeTimeout: 30s
