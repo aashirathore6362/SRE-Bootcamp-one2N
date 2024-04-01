@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
   dbimage: postgres:12
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 26114ce
+  tag: b0e766c
 
 replicascount: 1
 imagePullSecrets: []
