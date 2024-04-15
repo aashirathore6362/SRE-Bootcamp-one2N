@@ -6,7 +6,7 @@ on:
       - e2e-infra-automation
 
 jobs:
-  login:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -25,11 +25,10 @@ jobs:
       
       - name: Build and push docker image to E2E-CR.
         env:
-          REGISTRY: registry.e2enetworks.net
+          REGISTRY: registry.e2enetworks.net/poc-e2e-registry
           REPOSITORY: poc-e2e-registry
           IMAGE_TAG: ${{ env.git_hash }}
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-
           
