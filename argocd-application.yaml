@@ -9,7 +9,7 @@ spec:
   source:
     path: helmcharts
     repoURL: 'https://github.com/aashirathore6362/SRE-Bootcamp-one2N'
-    targetRevision: exercise-09
+    targetRevision: aws-infra-automation
     helm:
       valueFiles:
         - "values.yaml"

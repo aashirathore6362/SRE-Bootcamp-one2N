@@ -47,5 +47,3 @@ spec:
                   name: app-configmap
       imagePullSecrets:
         - name: myregistrykey
-      nodeSelector:
-        name: {{.Values.nodeSelector.appnode}}    
