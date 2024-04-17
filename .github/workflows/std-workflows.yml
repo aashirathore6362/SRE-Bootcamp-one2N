@@ -65,4 +65,4 @@ jobs:
               git config --global user.name "$git_password"
               git add helmcharts/values.yaml
               git commit -m "updated values in helm"
-              git push --set-upstream origin e2e-infra-automation'
+              git push --set-upstream origin e2e-infra-automation
