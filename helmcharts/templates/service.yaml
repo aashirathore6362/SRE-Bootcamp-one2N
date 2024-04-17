@@ -1,21 +1,6 @@
 apiVersion: {{ .Values.apiVersion | default "v1" }}
 kind: Service
 metadata:
-  name: postgres
-  namespace: {{.Values.namespace.getns}}
-  labels:
-    {{- include "mydb.labels" .}}
-spec:
-  ports:
-  - port: {{.Values.service.dbserviceport }}
-    name: postgresdb
-  clusterIP: None
-  selector:
-    app: postgres
----
-apiVersion: {{ .Values.apiVersion | default "v1" }}
-kind: Service
-metadata:
   name: student-api-service
   namespace: {{.Values.namespace.getns}}
   labels:
@@ -24,7 +9,7 @@ spec:
     ports:
     - port: {{.Values.service.port}}
       protocol: TCP
-      targetPort: {{.Values.service.targetPort}}
+      targetPort: {{.Values.service.targetport}}
     selector:
       {{- include "mycharts.labels" .}}
     type: {{.Values.service.type}}

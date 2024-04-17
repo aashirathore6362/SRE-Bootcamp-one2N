@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: service-nginx # name of your choice
+  namespace: student-api
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: e2e.blacksilky.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: student-api-service # name of service you want to run
+            port:
+              number: 80 # value of port on your service

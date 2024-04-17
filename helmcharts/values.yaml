@@ -7,11 +7,11 @@ replicaCount: 1
 namespace:
   getns: student-api
 image:
-  repository: aashirathore111/studentapi
+  repository: registry.e2enetworks.net/poc-e2e-registry/poc-e2e-registry
   pullPolicy: IfNotPresent
   dbimage: postgres:12
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 26114ce
+  tag: v1.0.0
 
 replicascount: 1
 imagePullSecrets: []
@@ -24,7 +24,7 @@ apiVersion: ""
 
 service:
   type: NodePort
-  port: 5000
+  port: 80
   targetport: 5000
   dbserviceport: 5432
 
@@ -32,8 +32,9 @@ secret:
   type: Opaque
   user: postgres
   password: postgres
-  dburl: postgresql://postgres:postgres@postgres:5432/postgres
-  auth: ewoJImF1dGhzIjogewoJCSJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CgkJCSJhdXRoIjogIllXRnphR2x5WVhSb2IzSmxNVEV4T2tsaVpIQnBkRFl6TmpJNE1DRT0iCgkJfQoJfQp9
+  dburl: postgresql://postgres:IeThohchi9xohs-i@10.6.188.6:5432/postgres
+  auth: ewoJImF1dGhzIjogewoJCSJyZWdpc3RyeS5lMmVuZXR3b3Jrcy5uZXQiOiB7CgkJCSJhdXRoIjogIllXSmtkV3hyWVhKcGJVQnlaV3hoYldKa1lTNWpiMjA2WW1sdWJtaFVUMVpYUlRFd056QXciCgkJfQoJfQp9Cg==
+
 
 containerport: 5000
 dbcontainerport: 5432
@@ -42,6 +43,7 @@ nodeSelector: {
     appnode: "application",
     dbnode: "dependent_services"
 }
+ingresshost: e2e.blacksilky.com
 
 tolerations: []
 
