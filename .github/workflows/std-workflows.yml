@@ -64,6 +64,6 @@ jobs:
               git add helmcharts/values.yaml
               git commit -m "updated values in helm"
               git push --set-upstream origin e2e-infra-automation'
-          with:
+          env:
             git_username: ${{ secrets.USER_EMAIL }}
             git_password: ${{ secrets.USER_PWD }}
