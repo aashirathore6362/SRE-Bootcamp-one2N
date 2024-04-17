@@ -2,12 +2,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: student-api-service
-  namespace: student-api
   labels:
     app: student-api
 spec:
     ports:
-    - port: 4000
+    - port: 80
       protocol: TCP
       targetPort: 5000
     selector:
@@ -18,7 +17,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-deployment
-  namespace: student-api
   labels:
     app: student-api
 spec:
@@ -32,7 +30,7 @@ spec:
     spec:
       containers:
         - name: flask-app
-          image: aashirathore111/studentapi:IMAGE_TAG
+          image: registry.e2enetworks.net/poc-e2e-registry/poc-e2e-registry:fc7c93c
           ports:
             - containerPort: 5000
           env:
@@ -41,9 +39,14 @@ spec:
                 secretKeyRef:
                   key: db_url
                   name: postgres-secret
+            - name: FLASK_RUN_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: flask_run_host
+                  name: app-configmap
       initContainers:
         - name: init-db-migration
-          image: aashirathore111/studentapi:IMAGE_TAG
+          image: registry.e2enetworks.net/poc-e2e-registry/poc-e2e-registry:fc7c93c
           env:
           - name: DB_URL
             valueFrom:
@@ -57,94 +60,33 @@ spec:
                   name: app-configmap
       imagePullSecrets:
         - name: myregistrykey
-      nodeSelector:
-        name: application    
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgres
-  namespace: student-api
-  labels:
-    app: postgres
-spec:
-  ports:
-  - port: 5432
-    name: postgresdb
-  clusterIP: None
-  selector:
-    app: postgres
----
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: postgresdb
-  namespace: student-api
-spec:
-  selector:
-    matchLabels:
-      app: postgres
-  serviceName: "postgres"
-  minReadySeconds: 10
-  template:
-    metadata:
-      labels:
-        app: postgres
-    spec:
-      containers:
-        - name: postgres-db
-          image: postgres:12
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 5432
-              name: postgresdb
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  key: postgres_user
-                  name: postgres-secret
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: postgres_password
-                  name: postgres-secret
-            - name: POSTGRES_DB
-              valueFrom:
-                configMapKeyRef:
-                  key: postgres_db
-                  name: app-configmap
-      nodeSelector:
-        name: dependent_services
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-configmap
-  namespace: student-api
   labels:
     app: postgres
 data:
   postgres_db: postgres
   migration: "TRUE"
+  flask_run_host: 0.0.0.0
 
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: postgres-secret
-  namespace: student-api
 type: Opaque
 data:
     postgres_user: cG9zdGdyZXM=
     postgres_password: cG9zdGdyZXM=
-    db_url: cG9zdGdyZXNxbDovL3Bvc3RncmVzOnBvc3RncmVzQHBvc3RncmVzOjU0MzIvcG9zdGdyZXM=
+    db_url: cG9zdGdyZXNxbDovL3Bvc3RncmVzOkllVGhvaGNoaTl4b2hzLWlAMTAuNy4xNjIuMTE6NTQzMi9wb3N0Z3Jlcwo=
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: myregistrykey
-  namespace: student-api
 data:
-  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CgkJCSJhdXRoIjogIllXRnphR2x5WVhSb2IzSmxNVEV4T2tsaVpIQnBkRFl6TmpJNE1DRT0iCgkJfQoJfQp9
+  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJyZWdpc3RyeS5lMmVuZXR3b3Jrcy5uZXQiOiB7CgkJCSJhdXRoIjogIllXSmtkV3hyWVhKcGJVQnlaV3hoYldKa1lTNWpiMjA2WW1sdWJtaFVUMVpYUlRFd056QXciCgkJfQoJfQp9Cg==
 type: kubernetes.io/dockerconfigjson
