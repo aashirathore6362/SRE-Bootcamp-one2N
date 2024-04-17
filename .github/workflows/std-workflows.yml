@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - e2e-infra-automation
+    paths-ignore:
+     - 'helmcharts/**'
+     - '.github/**'
 
 jobs:
   build-and-push:
@@ -31,11 +34,6 @@ jobs:
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-          
-          registry.e2enetworks.net/poc-e2e-registry/poc-e2e-registry:28a9baf
-
-          registry.e2enetworks.net/poc-e2e-registry/poc-e2e-registry
-          docker push registry.e2enetworks.net/poc-e2e-registry/REPOSITORY[:TAG]
 
   CD:
       name: argocd-application
