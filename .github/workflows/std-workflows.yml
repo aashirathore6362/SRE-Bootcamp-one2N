@@ -61,8 +61,8 @@ jobs:
             git_username: ${{ secrets.USER_EMAIL }}
             git_password: ${{ secrets.USER_PWD }}
           run: |
-              git config --global user.email "aashi@one2n.in"
-              git config --global user.name "ibdpit636280!"
+              git config --global user.email "$git_username"
+              git config --global user.name "$git_password"
               git add helmcharts/values.yaml
               git commit -m "updated values in helm"
               git push --set-upstream origin e2e-infra-automation'
