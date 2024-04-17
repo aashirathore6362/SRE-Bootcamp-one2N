@@ -39,7 +39,7 @@ jobs:
 
   CD:
       name: argocd-application
-      needs: CI
+      needs: build-and-push
       runs-on: ubuntu-latest
       
       steps:
