@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - aws-infra-automation
+    paths-ignore:
+     - 'helmcharts/**'
 jobs:
   build-and-push:
     name: Build and Push to ECR
@@ -35,3 +37,35 @@ jobs:
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+    
+  CD:
+      name: argocd-application
+      needs: build-and-push
+      runs-on: ubuntu-latest
+      
+      steps:
+        - name: Checkout code 
+          uses: actions/checkout@v3
+        
+        - name: Get Hash
+          id: get_commit_hash
+          run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+
+        - name: Git checkout branch
+          run: |
+              git status
+              git checkout aws-infra-automation
+
+        - name: Update value.yaml file.
+          run: sed -i "s/tag:.*/tag:\ ${{ env.git_hash }}/g" helmcharts/values.yaml
+        
+        - name: git commit and push values.yaml
+          env:
+            git_username: ${{ secrets.USER_EMAIL }}
+            git_password: ${{ secrets.USER_PWD }}
+          run: |
+              git config --global user.email "$git_username"
+              git config --global user.name "$git_password"
+              git add helmcharts/values.yaml
+              git commit -m "updated values in helm"
+              git push --set-upstream origin aws-infra-automation
