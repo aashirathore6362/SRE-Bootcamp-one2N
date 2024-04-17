@@ -35,35 +35,35 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-  # CD:
-  #     name: argocd-application
-  #     needs: build-and-push
-  #     runs-on: ubuntu-latest
+  CD:
+      name: argocd-application
+      needs: build-and-push
+      runs-on: ubuntu-latest
       
-  #     steps:
-  #       - name: Checkout code 
-  #         uses: actions/checkout@v3
-  #         with:
-  #               ssh-private-key: ${{ secrets.SSH_KEY }}
-  #       - name: Get Hash
-  #         id: get_commit_hash
-  #         run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+      steps:
+        - name: Checkout code 
+          uses: actions/checkout@v3
+          with:
+                ssh-private-key: ${{ secrets.SSH_KEY }}
+        - name: Get Hash
+          id: get_commit_hash
+          run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
 
-  #       - name: Git checkout branch
-  #         run: |
-  #             git status
-  #             git checkout e2e-infra-automation
+        - name: Git checkout branch
+          run: |
+              git status
+              git checkout e2e-infra-automation
 
-  #       - name: Update value.yaml file.
-  #         run: sed -i "s/tag:.*/tag:\ ${{ env.git_hash }}/g" helmcharts/values.yaml
+        - name: Update value.yaml file.
+          run: sed -i "s/tag:.*/tag:\ ${{ env.git_hash }}/g" helmcharts/values.yaml
         
-  #       - name: git commit and push values.yaml
-  #         run: |
-  #             git config --global user.email "$git_username"
-  #             git config --global user.name "$git_password"
-  #             git add helmcharts/values.yaml
-  #             git commit -m "updated values in helm"
-  #             git push --set-upstream origin e2e-infra-automation'
-  #         with:
-  #           git_username: ${{ secrets.USER_EMAIL }}
-  #           git_password: ${{ secrets.USER_PWD }}
+        - name: git commit and push values.yaml
+          run: |
+              git config --global user.email "$git_username"
+              git config --global user.name "$git_password"
+              git add helmcharts/values.yaml
+              git commit -m "updated values in helm"
+              git push --set-upstream origin e2e-infra-automation'
+          with:
+            git_username: ${{ secrets.USER_EMAIL }}
+            git_password: ${{ secrets.USER_PWD }}
