@@ -32,7 +32,7 @@ secret:
   type: Opaque
   user: postgres
   password: postgres
-  dburl: postgresql://postgres:IeThohchi9xohs-i@10.7.162.11:5432/postgres
+  dburl: postgresql://postgres:IeThohchi9xohs-i@10.8.14.9:5432/postgres
   auth: ewoJImF1dGhzIjogewoJCSJyZWdpc3RyeS5lMmVuZXR3b3Jrcy5uZXQiOiB7CgkJCSJhdXRoIjogIllXSmtkV3hyWVhKcGJVQnlaV3hoYldKa1lTNWpiMjA2WW1sdWJtaFVUMVpYUlRFd056QXciCgkJfQoJfQp9Cg==
 
 
